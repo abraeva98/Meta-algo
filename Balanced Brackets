@@ -1,0 +1,28 @@
+    public static String isBalanced(String s) {
+        // Write your code here
+        if(s.length() % 2 == 1) {
+            return "NO";
+        }
+        Map<Character, Character> pairs = new HashMap<>();
+        pairs.put(')', '(');
+        pairs.put(']', '[');
+        pairs.put('}', '{');
+        
+        Set<Character> keys = pairs.keySet();
+        
+        List<Character> stack = new ArrayList<>();
+        
+        for(int i = 0; i < s.length(); i ++) {
+            Character bracket = s.charAt(i);
+            if(keys.contains(bracket)) {
+                if(stack.size() == 0 || pairs.get(bracket) != stack.get(stack.size() - 1)) {
+                    return "NO";
+                } else {
+                    stack.remove(stack.size() - 1);
+                }
+            } else {
+                stack.add(bracket);
+            }
+        }
+        return stack.size() > 0 ? "NO" : "YES";
+    }
