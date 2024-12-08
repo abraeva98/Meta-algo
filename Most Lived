@@ -1,0 +1,34 @@
+class Person {
+  public int yearBirth;
+  public int yearDepth;
+  public Person(int yearBirth, int yearDepth) {
+    this.yearBirth = yearBirth;
+    this.yearDepth = yearDepth;
+  }
+}
+class Solution {
+  private int findPopulatedYear(List<Person> people) {
+      Map<Integer, Integer> populationYear = new HashMap<>();
+      int[] maxYear = {0, 0};
+
+      for(Person p: people) {
+        for(int year = p.yearBirth; year <= p.yearDepth; year ++) {
+          populationYear.put(year, populationYear.getOrDefault(year, 0) + 1);
+          if(populationYear.get(year) > maxYear[0]) {
+            maxYear[0] = populationYear.get(year);
+            maxYear[1] = year;
+          }
+        }
+      }
+
+      return maxYear[1];
+  }
+  public static void main(String[] args) {
+    Solution s = new Solution();
+    List<Person> people = new ArrayList<>();
+    people.add(new Person(1000, 2000));
+    people.add(new Person(1999, 2000));
+    people.add(new Person(1980, 2000));
+    System.out.println(s.findPopulatedYear(people));
+  }
+}
