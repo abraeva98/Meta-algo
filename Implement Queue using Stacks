@@ -1,0 +1,36 @@
+class MyQueue {
+    List<Integer> lastOnTop = new ArrayList<>();
+    List<Integer> firstOnTop = new ArrayList<>();
+
+    public MyQueue() {
+        
+    }
+    
+    public void push(int x) {
+        lastOnTop.add(x);
+    }
+    
+    public int peek() {
+        if(firstOnTop.isEmpty()) {
+            copyOver();
+        }
+        return firstOnTop.get(firstOnTop.size() - 1);
+    }
+    
+    public int pop() {
+        if(firstOnTop.isEmpty()) {
+            copyOver();
+        }
+        return firstOnTop.remove(firstOnTop.size() - 1);
+    }
+    
+    public boolean empty() {
+        return firstOnTop.isEmpty() && lastOnTop.isEmpty();
+    }
+
+    public void copyOver() {
+        while(!lastOnTop.isEmpty()) {
+            firstOnTop.add(lastOnTop.remove(lastOnTop.size() - 1));
+        }
+    }
+}
