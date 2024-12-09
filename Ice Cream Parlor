@@ -1,0 +1,27 @@
+class Result {
+    /*
+     * Complete the 'icecreamParlor' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts following parameters:
+     *  1. INTEGER m
+     *  2. INTEGER_ARRAY arr
+     */
+
+    public static List<Integer> icecreamParlor(int m, List<Integer> arr) {
+    // Write your code here
+        List<Integer> res = new ArrayList<>();
+        Map<Integer, Integer> seen = new HashMap<>();
+        
+        for(int idx = 0; idx < arr.size(); idx ++) {
+            int missingNum = m - arr.get(idx);
+            if(seen.containsKey(missingNum)) {
+                res.add(seen.get(missingNum) + 1);
+                res.add(idx + 1);
+                break;
+            }
+            seen.put(arr.get(idx), idx);
+        }
+        return res;
+    }
+}
