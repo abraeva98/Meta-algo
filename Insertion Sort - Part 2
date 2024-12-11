@@ -1,0 +1,20 @@
+    public static void insertionSort2(int n, List<Integer> arr) {
+    // Write your code here
+        for(int i = 1; i < arr.size(); i ++) {
+            for(int j = 0; j < i; j ++) {
+                if(arr.get(i) < arr.get(j)) {
+                    //arr.set(j, arr.get(i));
+                    int curr = arr.get(i);           
+                    for(int k = j; k < arr.size() - 1; k ++) {
+                        if(k >= i) {
+                            arr.set(k + 1, arr.get(k + 1));
+                        }
+                        arr.set(k + 1, arr.get(k));
+                        
+                    }
+                    arr.set(j, curr);
+                }
+            }
+            System.out.println(arr);
+        }
+    }
