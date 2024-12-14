@@ -1,0 +1,57 @@
+class Result {
+
+    /*
+     * Complete the 'bfs' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts following parameters:
+     *  1. INTEGER n
+     *  2. INTEGER m
+     *  3. 2D_INTEGER_ARRAY edges
+     *  4. INTEGER s
+     
+     n - num of nodes, n - num of edges
+     */
+
+    public static List<Integer> bfs(int n, int m, List<List<Integer>> edges, int s) {
+        // build a map
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for(int i = 0; i <= n; i ++) {
+            map.put(i, new ArrayList<Integer>());
+        }
+           
+        for(List<Integer> edge: edges) {
+            map.get(edge.get(0)).add(edge.get(1));
+            map.get(edge.get(1)).add(edge.get(0));
+        }
+        
+        int[] distances = new int[n + 1];
+        Arrays.fill(distances, -1);
+        distances[s] = 0;
+        
+        Queue<Integer> queue = new LinkedList<>();
+        // [1]
+        queue.add(s);
+        
+        while(!queue.isEmpty()) {
+            int currNode = queue.poll();
+            // [2, 3]
+            List<Integer> neighbors = map.get(currNode);
+            for(int neighbor: neighbors) {
+                if(distances[neighbor] == -1) {
+                    distances[neighbor] = distances[currNode] + 6;
+                    queue.add(neighbor);
+                }
+            }
+        }
+        
+        List<Integer> res = new ArrayList<>();
+        for(int i = 1; i < distances.length; i ++) {
+            if(i != s) {
+                res.add(distances[i]);
+            }
+        }
+        
+        return res;
+    }
+}
