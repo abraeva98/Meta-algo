@@ -1,45 +1,18 @@
-class Solution {
-  public static boolean isColorful(int num) {
-    Set<Integer> product = new HashSet<>();
+    public boolean isColorful(int number) {
+        HashSet<Integer> set = new HashSet<>();
+        String colorString = String.valueOf(number);
+        int length = colorString.length();
 
-    String strNum = String.valueOf(num);
-    int[] nums = Arrays.stream(strNum.split("")).mapToInt(Integer::parseInt).toArray();
-    List<Integer> totalProduct = new ArrayList<>();
-    Set<Integer> seen = new HashSet<>();
-
-    for(int currNum: nums) {
-      int p;
-      if(totalProduct.isEmpty()) {
-        p = currNum;
-      } else {
-        p = totalProduct.get(totalProduct.size() - 1) * currNum;
-      }
-      totalProduct.add(p);
-      seen.add(p);
-      seen.add(currNum);
-    }
-
-    List<Integer> newTotalProduct = new ArrayList<>();
-    System.out.println(seen);
-    for(int i = 0; i < nums.length; i ++) {
-      // System.out.println(seen);
-      for(int idx = i + 1; idx < totalProduct.size(); idx ++) {
-        int t = totalProduct.get(idx);
-        System.out.println(t / nums[i]);
-        newTotalProduct.add(t / nums[i]);
-        if(seen.contains(t / nums[i])) {
-          System.out.println(seen);
-          System.out.println(t / nums[i]);
-          return false;
+        for (int i = 0; i < length; i++) {
+            int product = 1;
+            for (int j = i; j < length; j++) {
+                product *= (colorString.charAt(j) - '0');
+                if (set.contains(product)) {
+                    return false;
+                } else {
+                    set.add(product);
+                }
+            }
         }
-        seen.add(t / nums[i]);
-      }
-      totalProduct = new ArrayList<>(newTotalProduct);
+        return true;
     }
-    return true;
-  }
-
-  public static void main(String[] args) {
-    System.out.println(Solution.isColorful(326));
-  }
-}
