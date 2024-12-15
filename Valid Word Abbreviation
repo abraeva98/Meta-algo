@@ -1,0 +1,28 @@
+class Solution {
+    public boolean validWordAbbreviation(String word, String abbr) {
+        if(word.length() < abbr.length()) return false;
+        int i = 0;
+        int j = 0;
+
+        while(i < word.length() && j < abbr.length()) {
+            int moveByIdx = 0;
+            if(word.charAt(i) == abbr.charAt(j)) {
+                i ++;
+                j ++;
+                continue;
+            }
+
+            if(!Character.isDigit(abbr.charAt(j)) || abbr.charAt(j) == '0') {
+                return false;
+            }
+
+            while(j < abbr.length() && Character.isDigit(abbr.charAt(j))) {
+                moveByIdx = (moveByIdx * 10) + abbr.charAt(j) - '0';
+                j ++;
+            }
+            i = i + moveByIdx;
+        }
+
+        return i == word.length() && j == abbr.length();
+    }
+}
