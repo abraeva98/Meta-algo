@@ -1,0 +1,32 @@
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        Set<Integer> removeIdx = new HashSet<>();
+
+        for(int i = 0; i < s.length(); i ++) {
+            char c = s.charAt(i);
+            if(c == ')') {
+                if(stack.isEmpty()) {
+                    removeIdx.add(i);
+                } else {
+                    stack.pop();
+                }
+            } else if(c == '(') {
+                stack.push(i);
+            }
+        }
+
+        List<Character> res = new ArrayList<>();
+
+        for(Integer idx: stack) {
+            removeIdx.add(idx);
+        }
+        
+        for(int j = 0; j < s.length(); j ++) {
+            if(removeIdx.contains(j)) continue;
+            res.add(s.charAt(j));
+        }
+
+        return res.stream().map(String::valueOf).collect(Collectors.joining(""));
+    }
+}
