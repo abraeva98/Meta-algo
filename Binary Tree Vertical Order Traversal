@@ -1,0 +1,41 @@
+class Solution {
+    Map<Integer, List<Integer>> map = new HashMap<>();
+
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<Pair<Integer, TreeNode>> queue = new LinkedList<>();
+        if(root == null) return res;
+        queue.add(new Pair(0, root));
+
+        int start = 0;
+        int end = 0;
+
+        while(!queue.isEmpty()) {
+            Pair<Integer, TreeNode> p = queue.poll();
+            TreeNode parent = p.getValue();
+            int col = p.getKey();
+            
+            if(!map.containsKey(col)) {
+                map.put(col, new ArrayList<Integer>());
+            }
+
+            map.get(col).add(parent.val);
+
+            if(parent.left != null) {
+                queue.add(new Pair(col - 1, parent.left));
+                start = Math.min(start, col - 1);
+            }
+
+            if(parent.right != null) {
+                queue.add(new Pair(col + 1, parent.right));
+                end = Math.max(end, col + 1);
+            }
+        }
+        
+        for(int idx = start; idx <= end; idx ++) {
+            res.add(map.get(idx));
+        }
+
+        return res;
+    }
+}
