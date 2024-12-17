@@ -1,0 +1,35 @@
+class Solution {
+    public Node lowestCommonAncestor(Node p, Node q) {
+        int heightP = findHeight(p, 0);
+        int heightQ = findHeight(q, 0);
+
+        Node highest = null;
+        Node smallest = null;
+
+        if(heightP < heightQ) {
+            highest = q;
+            smallest = p;
+        } else {    
+            highest = p;
+            smallest = q;
+        }
+
+        int diff = Math.abs(heightP - heightQ);
+        while(diff > 0) {
+            highest = highest.parent;
+            diff --;
+        }
+
+        while(highest != smallest) {
+            highest = highest.parent;
+            smallest = smallest.parent;
+        }
+
+        return highest;
+    }
+
+    public int findHeight(Node node, int h) {
+        if(node == null) return h;
+        return findHeight(node.parent, h + 1);
+    }
+}
