@@ -1,0 +1,34 @@
+class Solution {
+    int[] cumulative;
+    int sum;
+    public Solution(int[] w) {
+        sum = 0;
+        cumulative = new int[w.length];
+
+        for(int i = 0; i < w.length; i ++) {
+            sum += w[i];
+            cumulative[i] = sum;
+        }
+    }
+    
+    public int pickIndex() {
+        int num = (int) ( Math.random() * sum ) + 1;
+        return binarySearch(num);
+    }
+
+    public int binarySearch(int num) {
+        int left = 0;
+        int right = cumulative.length - 1;
+
+        while(left < right) {
+            int mid = left + (right - left) / 2;
+            if(cumulative[mid] < num) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        return left;
+    }
+}
