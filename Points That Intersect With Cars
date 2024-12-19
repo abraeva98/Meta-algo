@@ -1,0 +1,22 @@
+class Solution {
+    public int numberOfPoints(List<List<Integer>> nums) {
+        nums.sort((a, b) -> Integer.compare(a.get(0), b.get(0)));
+
+        LinkedList<List<Integer>> merged = new LinkedList<>();
+
+        for(List<Integer> num: nums) {
+            if(merged.isEmpty() || num.get(0) > merged.getLast().get(1)) {
+                merged.add(num);
+            } else {
+                merged.getLast().set(1, Math.max(merged.getLast().get(1), num.get(1)));
+            }
+        }
+
+        int numPoints = 0;
+        for(List<Integer> points: merged) {
+            numPoints += points.get(1) - points.get(0) + 1;
+        }
+
+        return numPoints;
+    }
+}
