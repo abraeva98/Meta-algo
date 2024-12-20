@@ -1,0 +1,30 @@
+
+class Solution {
+    public double myPow(double x, int n) {
+        if(x == 1 || n == 0) {
+            return 1;
+        }
+        if(x == 0) {
+            return 0;
+        }
+
+        long nLong = n;
+        boolean isNegative = false;
+        if(n < 0) {
+            nLong = -nLong;
+            isNegative = true;
+        }
+
+        double res = x;
+
+        for(int times = 1; times < nLong; times ++) {
+            res =  res * x;
+        }
+
+        if(isNegative) {
+            return 1 / res;
+        }
+
+        return res;
+    }
+}
