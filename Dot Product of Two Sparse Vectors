@@ -1,0 +1,25 @@
+class SparseVector {
+    HashMap<Integer, Integer> map = new HashMap<>();
+
+    SparseVector(int[] nums) {
+        for(int i = 0; i < nums.length; i ++) {
+            if(nums[i] != 0) {
+                map.put(i, nums[i]);
+            }
+        }
+    }
+    
+	// Return the dotProduct of two sparse vectors
+    public int dotProduct(SparseVector vec) {
+        HashMap<Integer, Integer> largest = vec.map.size() > map.size() ? vec.map : this.map;
+        HashMap<Integer, Integer> smallest = vec.map.size() > map.size() ? this.map : vec.map;
+        int dotProduct = 0;
+
+        for(Integer key: largest.keySet()) {
+            if(smallest.containsKey(key)) {
+                dotProduct += largest.get(key) * smallest.get(key);
+            }
+        }
+        return dotProduct;
+    }
+}
