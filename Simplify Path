@@ -1,0 +1,20 @@
+class Solution {
+    public String simplifyPath(String path) {
+        String[] words = path.split("/");
+        List<String> canonical = new ArrayList<>();
+
+        for(String word: words) {
+            if(word == "") continue;
+            if(word.equals(".")) continue;
+            if(word.equals("..")) {
+                if(!canonical.isEmpty()) {
+                    canonical.remove(canonical.size() - 1);
+                }
+            } else {
+                canonical.add(word);
+            }
+        }
+
+        return "/" + String.join("/", canonical);
+    }
+}
