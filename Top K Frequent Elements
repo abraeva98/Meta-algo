@@ -1,4 +1,66 @@
 class Solution {
+    Map<Integer, Integer> frequency = new HashMap<>();
+
+    public int[] topKFrequent(int[] nums, int k) {   
+        for(int num: nums) {
+            frequency.put(num, frequency.getOrDefault(num, 0) + 1);
+        }
+    
+        int[] res = new int[frequency.size()];
+        int idx = 0;
+        for(Map.Entry<Integer, Integer> entry: frequency.entrySet()) {
+            res[idx] = entry.getKey();
+            idx += 1;
+        }
+
+        int left = 0;
+        int right = res.length - 1;
+
+        while(left < right) {
+            // left are the nums that are less frequent and right are more frequent
+            int pivot = findPivotIdx(res, left, right);
+            if(pivot == frequency.size() - k) {
+                break;
+            }
+            /*
+                if target idx is lesser than pivot 
+                then the target is on the left side 
+            */
+            if(pivot > frequency.size() - k) {
+                right = pivot - 1;
+            } else {
+                left = pivot + 1;
+            }
+        } 
+
+        return Arrays.copyOfRange(res, frequency.size() - k, frequency.size());
+
+    }
+
+    public int findPivotIdx(int[] nums, int left, int right) {
+        int main = frequency.get(nums[right]);
+        int pivot = left;
+
+        for(int i = left; i < right; i ++) {
+            if(frequency.get(nums[i]) < main) {
+                int temp = nums[pivot];
+                nums[pivot] = nums[i];
+                nums[i] = temp;
+                pivot += 1;
+             }
+        }
+
+        int temp = nums[pivot];
+        nums[pivot] = nums[right];
+        nums[right] = temp;
+
+        return pivot;
+    }
+}
+
+
+
+class Solution {
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> frequency = new HashMap<>();
         
