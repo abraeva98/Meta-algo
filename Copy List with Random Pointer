@@ -1,0 +1,32 @@
+class Solution {
+    Map<Node, Node> lookup = new HashMap<>();
+
+    public Node addNode(Node node) {
+        if(node == null) return node;
+        if(!lookup.containsKey(node)) {
+            lookup.put(node, new Node(node.val));
+        }
+
+        return lookup.get(node);
+    }
+
+    public Node copyRandomList(Node head) {
+        if (head == null) {
+            return null;
+        }
+        
+        Node copyHead = new Node(head.val);
+        Node node = copyHead;
+
+        lookup.put(head, node);
+
+        while(head != null && node != null) {
+            node.random = addNode(head.random);
+            node.next = addNode(head.next);
+            node = node.next;
+            head = head.next;
+        }
+
+        return copyHead;
+    }
+}
