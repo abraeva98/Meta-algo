@@ -1,0 +1,28 @@
+class Solution {
+    public String addStrings(String num1, String num2) {
+        int n = num1.length() - 1;
+        int m = num2.length() - 1;
+
+        StringBuilder output = new StringBuilder();
+        int carry = 0;
+
+        /*
+            num1 = "456", num2 = "77"
+            6 + 7 = 13 carry = 1
+            13 
+        */
+        while(n >= 0 || m >= 0 || carry > 0) {
+            int n1 = n >= 0 ? num1.charAt(n) - '0' : 0;
+            int n2 = m >= 0 ? num2.charAt(m) - '0' : 0;
+            int sum = (n1 + n2) + carry;
+            carry = sum / 10;
+            output.append(sum % 10);
+            n --;
+            m --;
+        }
+
+        output.reverse();
+
+        return output.toString();
+    }
+}
