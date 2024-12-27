@@ -1,0 +1,29 @@
+class Solution {
+    public int getLargestOutlier(int[] nums) {
+        int totalSum = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int num: nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+            totalSum += num;
+        }
+
+        int maxOutlier = Integer.MIN_VALUE;
+        for(int num: nums) {
+            if((totalSum - num) % 2 != 0) {
+                continue;
+            }
+            int potentialSum = (totalSum - num) / 2;
+
+            if(map.containsKey(potentialSum)) {
+                if(potentialSum == num && map.get(potentialSum) <= 1) {
+                    continue;
+                }
+                if(maxOutlier < num) {
+                    maxOutlier = num;
+                }
+            }
+        }
+
+        return maxOutlier;
+    }
+}
