@@ -1,0 +1,31 @@
+class Solution {
+    List<List<Integer>> permutations = new ArrayList<>();
+
+    public List<List<Integer>> permute(int[] nums) {
+        for(int i = 0; i < nums.length; i ++) {
+            List<Integer> temp = new ArrayList<>();
+            HashSet<Integer> seen = new HashSet<>();
+            seen.add(i);
+            temp.add(nums[i]);
+            helper(nums, temp, seen);
+        }
+    
+        return permutations;
+    }
+
+    public void helper(int[] nums, List<Integer> currNums, HashSet<Integer> seen) {
+        if(currNums.size() == nums.length) {
+            permutations.add(new ArrayList<>(currNums));
+            return;
+        }
+
+        for(int i = 0; i < nums.length; i ++) {
+            if(seen.contains(i)) continue;
+            currNums.add(nums[i]);
+            seen.add(i);
+            helper(nums, new ArrayList<>(currNums), seen);
+            currNums.remove(currNums.size() - 1);
+            seen.remove(i);
+        }
+    }
+}
