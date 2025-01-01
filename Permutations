@@ -2,6 +2,30 @@ class Solution {
     List<List<Integer>> permutations = new ArrayList<>();
 
     public List<List<Integer>> permute(int[] nums) {
+        List<Integer> currNums = new ArrayList<>();
+        helper(nums, currNums);
+    
+        return permutations;
+    }
+
+    public void helper(int[] nums, List<Integer> currNums) {
+        if(currNums.size() == nums.length) {
+            permutations.add(currNums);
+            return;
+        }
+        for(int num: nums) {
+            if(currNums.contains(num)) continue;
+            currNums.add(num);
+            helper(nums, new ArrayList<>(currNums));
+            currNums.remove(currNums.size() - 1);
+        }
+    }
+}
+
+class Solution {
+    List<List<Integer>> permutations = new ArrayList<>();
+
+    public List<List<Integer>> permute(int[] nums) {
         for(int i = 0; i < nums.length; i ++) {
             List<Integer> temp = new ArrayList<>();
             HashSet<Integer> seen = new HashSet<>();
